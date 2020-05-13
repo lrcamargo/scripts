@@ -2,7 +2,7 @@
 echo Script Manutencao
 echo Created by: Leticia
 echo Creation Date: 26/04/20
-echo Updated Date: 09/05/20
+echo Updated Date: 12/05/20
 title Manutencao
 color 6
 :menu
