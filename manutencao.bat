@@ -14,14 +14,16 @@ echo 2 - Limpar Disco
 echo 3 - Escanear sistema
 echo 4 - Corrigir sistema - Win 8 em diante
 echo 5 - Verificar estado do disco
-echo 6 - Sair
+echo 6 - Limpar spool de impressao
+echo 7 - Sair
 set /p Input=Escolha a opcao do menu:
 if %Input%==1 goto limpacache
 if %Input%==2 goto limpadisco
 if %Input%==3 goto escanear
 if %Input%==4 goto corrigir
 if %Input%==5 goto verificar
-if %Input%==6 goto sair
+if %Input%==6 goto spool
+if %Input%==7 goto sair
 
 :limpacache
 cls
@@ -162,6 +164,16 @@ goto menu
 
 :verificar
 wmic diskdrive get status
+goto menu
+
+:spool
+net stop spooler
+c:
+cd %systemroot% system32spoolprinters
+del /f/s *.shd
+del /f/s *.spl
+net start spooler
+pause
 goto menu
 
 :sair
