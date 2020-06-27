@@ -1,10 +1,23 @@
 @echo off
-echo Script Manutencao
-echo Created by: Leticia
-echo Creation Date: 26/04/20
-echo Updated Date: 12/05/20
 title Manutencao
 color 6
+echo      ___  _____
+echo    .'/,-Y"     "~-.
+echo    l.Y             ^.	Script Manutencao
+echo    /\               _\_      Created by: Leticia
+echo   i            ___/"   "\		Creation Date: 26/04/20
+echo   !          /"   "\   o !			Updated Date: 26/06/20
+echo   l         ]     o !__./
+echo    \ _  _    \.___./    "~\
+echo     X \/ \            ___./
+echo    ( \ ___.   _..--~~"   ~`-.
+echo     ` Z,--   /               \
+echo       \__.  (   /       ______)
+echo         \   l  /-----~~" /      -Row
+echo          Y   \          /
+echo          !    "x______.^
+echo          !           \
+echo          j            Y
 :menu
 echo -------------------------------------------------
 echo Menu Principal
@@ -14,16 +27,22 @@ echo 2 - Limpar Disco
 echo 3 - Escanear sistema
 echo 4 - Corrigir sistema - Win 8 em diante
 echo 5 - Verificar estado do disco
-echo 6 - Limpar spool de impressao
-echo 7 - Sair
+echo 6 - Corrigir icones
+echo 7 - Limpar spool de impressao
+echo 8 - Renovar DHCP
+echo 9 - Remover arquivos de update
+echo 10 - Sair
 set /p Input=Escolha a opcao do menu:
 if %Input%==1 goto limpacache
 if %Input%==2 goto limpadisco
 if %Input%==3 goto escanear
 if %Input%==4 goto corrigir
 if %Input%==5 goto verificar
-if %Input%==6 goto spool
-if %Input%==7 goto sair
+if %Input%==6 goto icone
+if %Input%==7 goto spool
+if %Input%==8 goto dhcp
+if %Input%==9 goto removeupdate
+if %Input%==10 goto sair
 
 :limpacache
 cls
@@ -166,6 +185,11 @@ goto menu
 wmic diskdrive get status
 goto menu
 
+:icone
+cls
+if exist "%profiles%\%%u\AppData\Local\IconCache" rm /s /q "%profiles%\%%u\AppData\Local\IconCache"
+goto menu
+
 :spool
 net stop spooler
 c:
@@ -174,6 +198,18 @@ del /f/s *.shd
 del /f/s *.spl
 net start spooler
 pause
+goto menu
+
+:dhcp
+ipconfig /release
+ipconfig /renew
+
+:removeupdate
+net stop wuauserv
+cd %windir%
+cd SoftwareDistribution\
+del /F /S /Q Download
+net start wuauserv
 goto menu
 
 :sair
